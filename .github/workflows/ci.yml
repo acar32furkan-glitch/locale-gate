@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: kalite (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Bağımlılıkları kur
+        run: uv sync --all-extras --dev --python ${{ matrix.python-version }}
+      - name: ruff (lint)
+        run: uv run ruff check .
+      - name: ruff (format)
+        run: uv run ruff format --check .
+      - name: mypy (strict)
+        run: uv run mypy
+      - name: pytest + kapsam
+        run: uv run pytest --cov=locale_gate --cov-report=term-missing --cov-fail-under=85
+      - name: Altın set (kuralların davranış sözleşmesi)
+        run: uv run locale-gate eval examples/golden
+
+  gate:
+    name: kapı örnek katalogda çalışıyor mu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --all-extras --dev
+
+      - name: Kusurlu katalog kapıyı düşürmeli (çıkış kodu 1 beklenir)
+        run: |
+          set +e
+          uv run locale-gate check examples/data/catalog.json \
+            --glossary examples/data/glossary.yaml --max-findings 5 > /dev/null
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "HATA: beklenen çıkış kodu 1, gelen $code" >&2
+            exit 1
+          fi
+          echo "doğru davranış: kapı düştü (exit 1)"
+
+      - name: Düzeltilmiş katalog kapıyı geçmeli (çıkış kodu 0 beklenir)
+        run: |
+          uv run locale-gate check examples/data/catalog-fixed.json \
+            --glossary examples/data/glossary.yaml --max-findings 5
+
+      - name: İş özeti (Actions sekmesine Markdown rapor)
+        if: always()
+        run: |
+          set +e
+          uv run locale-gate check examples/data/catalog.json \
+            --glossary examples/data/glossary.yaml --github-summary > /dev/null
+          exit 0
