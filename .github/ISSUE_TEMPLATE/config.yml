@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Güvenlik açığı
+    url: https://github.com/acar32furkan-glitch/locale-gate/security/policy
+    about: Güvenlikle ilgili konuları herkese açık issue olarak açmayın; özel bildirim kullanın.
+  - name: Kural sözlüğü ve eşikler
+    url: https://github.com/acar32furkan-glitch/locale-gate/blob/main/docs/rules.md
+    about: Hangi kodun ne anlama geldiğini ve eşiklerin neden seçildiğini burada bulabilirsiniz.

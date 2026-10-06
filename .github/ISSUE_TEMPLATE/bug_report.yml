@@ -1,0 +1,52 @@
+name: Hata bildirimi / yanlış alarm
+description: Kapı yanlış alarm verdi ya da gerçek bir hatayı kaçırdı.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Teşekkürler! Bu proje metne bakan kurallarla çalışır; örnek **segment metni** olmadan
+        düzeltilemez. Lütfen kaynak ve hedef metni kısaltarak paylaşın.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Sorun türü
+      options:
+        - Yanlış alarm (olmayan hata bildirildi)
+        - Kaçırılan hata (var olan hata bildirilmedi)
+        - Çökme / beklenmeyen hata
+        - Diğer
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: İlgili kural veya kod
+      placeholder: "tokens · SAYI_KAYIP"
+  - type: textarea
+    id: segment
+    attributes:
+      label: Segment (kaynak → hedef)
+      placeholder: |
+        source: 45 x 30 x 12 cm ölçülerinde, 780 gram
+        target: Measures 45 x 30 x 12 cm and weighs 0.78 kg
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen davranış ve gerekçe
+      placeholder: Bu segmentte SAYI_KAYIP bekleniyordu çünkü gram değeri değişmiş.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Sürüm
+      placeholder: "locale-gate --version çıktısı"
+  - type: textarea
+    id: config
+    attributes:
+      label: Varsa yapılandırma ve komut
+      render: shell

@@ -1,0 +1,39 @@
+name: Kural veya özellik önerisi
+description: Yeni bir kural, dil çifti veya iş akışı önerin.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Hangi hata sınıfı yakalanmıyor?
+      placeholder: |
+        Örnek: "Bir ürün adı iki farklı segmentte farklı yazılıyor (iPhone 15 Pro / Iphone 15 pro).
+        Bu tutarsızlığı hiçbir kural yakalamıyor."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Önerilen kural ve örnek girdi
+      placeholder: |
+        Kural adı: consistency
+        Girdi: aynı ürün kodunu içeren iki segment
+        Beklenen: yazım farkı varsa uyarı
+    validations:
+      required: true
+  - type: dropdown
+    id: deterministic
+    attributes:
+      label: Bu kural deterministik olabilir mi? (ağ/LLM çağrısı gerektirir mi?)
+      options:
+        - "Evet, saf fonksiyonla yazılabilir"
+        - "Hayır, LLM hakem gerektirir"
+        - "Emin değilim"
+    validations:
+      required: true
+  - type: textarea
+    id: falsepositives
+    attributes:
+      label: Yanlış alarm riski ve nasıl önlenir?
+      placeholder: Kuralın emin olmadığında susması için hangi koşul gerekli?
