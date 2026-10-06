@@ -15,8 +15,12 @@ permissions:
 
 jobs:
   quality:
-    name: kalite (py${{ matrix.python-version }})
+    name: kalite (python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+    # Matris yorumlayıcısını uv'ye sabitliyoruz: aksi hâlde `uv run` .python-version'a dönüp
+    # venv'i yeniden kurar (ve dev araçları düşer). Bu satır olmadan 3.13 işi sessizce 3.12 koşar.
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,7 +31,11 @@ jobs:
         with:
           enable-cache: true
       - name: Bağımlılıkları kur
-        run: uv sync --all-extras --dev --python ${{ matrix.python-version }}
+        run: uv sync --all-extras --dev
+      - name: Yorumlayıcıyı ve araçları doğrula
+        run: |
+          uv run python -c "import sys; v=f'{sys.version_info[0]}.{sys.version_info[1]}'; assert v == '${{ matrix.python-version }}', f'beklenen ${{ matrix.python-version }}, gelen {v}'; print('python', v)"
+          uv run ruff --version
       - name: ruff (lint)
         run: uv run ruff check .
       - name: ruff (format)

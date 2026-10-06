@@ -5,10 +5,17 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    labels: ["dependencies"]
     groups:
-      dev-dependencies:
-        patterns: ["pytest*", "ruff", "mypy", "pydantic", "pyyaml"]
+      python-dev-tools:
+        patterns: ["pytest*", "ruff", "mypy", "respx", "types-*"]
+      python-runtime:
+        patterns: ["pydantic*", "pyyaml"]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
+    labels: ["dependencies"]
+    groups:
+      actions:
+        patterns: ["*"]
