@@ -123,4 +123,4 @@ uv run locale-gate eval examples/golden   # the behaviour contract of the rules
 
 ## License
 
-[MIT](LICENSE) © 2026 acar32furkan-glitch
+[MIT](LICENSE) © 2026 Furkan Acar (acar32furkan-glitch)

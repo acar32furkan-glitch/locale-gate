@@ -118,4 +118,4 @@ uv run locale-gate eval examples/golden   # altın set: kuralların davranış s
 
 ## Lisans
 
-[MIT](LICENSE) © 2026 acar32furkan-glitch
+[MIT](LICENSE) © 2026 Furkan Acar (acar32furkan-glitch)

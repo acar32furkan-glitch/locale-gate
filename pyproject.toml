@@ -9,7 +9,7 @@ description = "Deterministic translation quality gate for TR↔EN e-commerce con
 readme = "README.md"
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
-authors = [{ name = "acar32furkan-glitch" }]
+authors = [{ name = "Furkan Acar (acar32furkan-glitch)" }]
 keywords = ["localization", "translation", "qa", "turkish", "e-commerce", "cli", "ci"]
 classifiers = [
   "Development Status :: 3 - Alpha",
