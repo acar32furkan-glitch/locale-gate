@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="866" height="1076" viewBox="0 0 866 1076" role="img" aria-label="locale-gate check — örnek katalog">
+  <rect width="866" height="1076" rx="10" fill="#0b1120"/>
+  <rect width="866" height="38" rx="10" fill="#1e293b"/>
+  <rect y="28" width="866" height="10" fill="#1e293b"/>
+  <circle cx="20" cy="19" r="6" fill="#f87171"/>
+  <circle cx="40" cy="19" r="6" fill="#fbbf24"/>
+  <circle cx="60" cy="19" r="6" fill="#4ade80"/>
+  <text x="82" y="24" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12.5">locale-gate check — örnek katalog</text>
+  <text x="22" y="62" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">ÇEVİRİ KALİTE KAPISI</text>
+  <text x="22" y="81" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  yön: tr → en  ·  segment: 12  ·  katalog: examples/data/catalog.json</text>
+  <text x="22" y="100" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  skor: 0.529 / eşik 0.950  ·  KRİTİK 5  ·  UYARI 7  ·  BİLGİ 0</text>
+  <text x="22" y="119" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve"></text>
+  <text x="22" y="138" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">KURAL BAŞARI ORANLARI</text>
+  <text x="22" y="157" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  Sözlük uyumu       42.9%   (6 bulgu, 4 segment etkilendi / 7 segment)</text>
+  <text x="22" y="176" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  Korunan ifadeler   33.3%   (2 bulgu / 3 segment)</text>
+  <text x="22" y="195" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  Türkçe yazım       83.3%   (3 bulgu, 2 segment etkilendi / 12 segment)</text>
+  <text x="22" y="214" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  Uzunluk bütçesi    91.7%   (1 bulgu / 12 segment)</text>
+  <text x="22" y="233" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve"></text>
+  <text x="22" y="252" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">BULGULAR</text>
+  <text x="22" y="271" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  1. [KRİTİK] [TERM_EKSIK] Sözlük karşılığı eksik: “şişme mont” → “puffer jacket”</text>
+  <text x="22" y="290" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : title  ·  segment: P-1002-title</text>
+  <text x="22" y="309" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Hedef metin zorunlu karşılığı içermiyor. Kaynak: “Şişme Mont Kadın, Su İtici Kumaş,</text>
+  <text x="22" y="328" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">               Kapüşonlu”</text>
+  <text x="22" y="347" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Çeviriyi “puffer jacket” ifadesini içerecek şekilde düzeltin (Kategori adı sözlükte sabit)</text>
+  <text x="22" y="366" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  2. [KRİTİK] [TOKEN_KAYIP] Yer tutucu korunmamış: {order_id}</text>
+  <text x="22" y="385" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : description  ·  segment: P-1005-description</text>
+  <text x="22" y="404" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Kaynakta bulunan `{order_id}` hedef metinde yok. Şablon bozulursa çıktı çalışma zamanında</text>
+  <text x="22" y="423" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">               hata verir.</text>
+  <text x="22" y="442" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Çeviriye `{order_id}` parçasını aynen ekleyin.</text>
+  <text x="22" y="461" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  3. [KRİTİK] [TERM_EKSIK] Sözlük karşılığı eksik: “kargo ücreti” → “shipping fee”</text>
+  <text x="22" y="480" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : description  ·  segment: P-1006-description</text>
+  <text x="22" y="499" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Hedef metin zorunlu karşılığı içermiyor. Kaynak: “500 TL üzeri alışverişlerde kargo ücreti</text>
+  <text x="22" y="518" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">               alınmaz; iade süresi 14 gündür.”</text>
+  <text x="22" y="537" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Çeviriyi “shipping fee” ifadesini içerecek şekilde düzeltin (Ödeme sayfası metinleriyle aynı</text>
+  <text x="22" y="556" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">               olmalı)</text>
+  <text x="22" y="575" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  4. [KRİTİK] [CEVRILMEMIS] Segment çevrilmemiş görünüyor</text>
+  <text x="22" y="594" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : title  ·  segment: P-1007-title</text>
+  <text x="22" y="613" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Hedef metin kaynakla birebir aynı: “Kadın Kışlık Şişme Mont”</text>
+  <text x="22" y="632" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Bu alanı hedef dile çevirin ya da bilinçli olarak dışarıda bırakıldıysa segmenti işaretleyin.</text>
+  <text x="22" y="651" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  5. [KRİTİK] [TERM_EKSIK] Sözlük karşılığı eksik: “şişme mont” → “puffer jacket”</text>
+  <text x="22" y="670" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : title  ·  segment: P-1007-title</text>
+  <text x="22" y="689" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Hedef metin zorunlu karşılığı içermiyor. Kaynak: “Kadın Kışlık Şişme Mont”</text>
+  <text x="22" y="708" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Çeviriyi “puffer jacket” ifadesini içerecek şekilde düzeltin (Kategori adı sözlükte sabit)</text>
+  <text x="22" y="727" fill="#fbbf24" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  6. [UYARI] [TERM_YASAK] Yasaklı çeviri kullanılmış: “puffer coat”</text>
+  <text x="22" y="746" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : title  ·  segment: P-1002-title</text>
+  <text x="22" y="765" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : “şişme mont” için sözlük “puffer jacket” diyor, “puffer coat” yasaklı.</text>
+  <text x="22" y="784" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : “puffer coat” yerine sözlükteki karşılığı kullanın.</text>
+  <text x="22" y="803" fill="#fbbf24" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  7. [UYARI] [SAYI_KAYIP] Ölçü/model bilgisi kaybolmuş: 780 gr</text>
+  <text x="22" y="822" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : bullet  ·  segment: P-1003-bullet</text>
+  <text x="22" y="841" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : Kaynakta `780 gr` var; hedef metinde `780` rakam dizisi geçmiyor.</text>
+  <text x="22" y="860" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : Ölçü ve model numaraları çevrilmez, aynen taşınır.</text>
+  <text x="22" y="879" fill="#fbbf24" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  8. [UYARI] [TERM_YASAK] Yasaklı çeviri kullanılmış: “cargo fee”</text>
+  <text x="22" y="898" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      alan   : description  ·  segment: P-1006-description</text>
+  <text x="22" y="917" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      durum  : “kargo ücreti” için sözlük “shipping fee” diyor, “cargo fee” yasaklı.</text>
+  <text x="22" y="936" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">      çözüm  : “cargo fee” yerine sözlükteki karşılığı kullanın.</text>
+  <text x="22" y="955" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  … 4 bulgu daha var (--max-findings ile sınırı artırın).</text>
+  <text x="22" y="974" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve"></text>
+  <text x="22" y="993" fill="#f87171" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">KARAR: KALDI ✘</text>
+  <text x="22" y="1012" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  neden: skor 0.529 &lt; eşik 0.950 (5 kritik, 12 bulgu)</text>
+  <text x="22" y="1031" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" xml:space="preserve">  neden: 5 kritik bulgu var (fail_on_critical=true)</text>
+</svg>
