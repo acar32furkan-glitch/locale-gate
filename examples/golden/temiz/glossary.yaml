@@ -1,0 +1,9 @@
+source_locale: tr
+target_locale: en
+
+terms:
+  - source: hakiki deri
+    target: genuine leather
+  - source: ücretsiz kargo
+    target: free shipping
+    forbidden: [free cargo]

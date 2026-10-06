@@ -1,0 +1,46 @@
+{
+  "cases": [
+    {
+      "name": "tr-en temel kurallar",
+      "catalog": "tr_en_temel/catalog.json",
+      "glossary": "tr_en_temel/glossary.yaml",
+      "expect_passed": false,
+      "expected": {
+        "G-101-title": [],
+        "G-102-title": ["TERM_EKSIK", "TERM_YASAK"],
+        "G-103-bullet": ["SAYI_KAYIP"],
+        "G-104-description": [],
+        "G-105-title": ["TR_DIAKRITIK"],
+        "G-106-title": ["CEVRILMEMIS", "TERM_EKSIK"]
+      }
+    },
+    {
+      "name": "en-tr sayı ve büyük harf kuralları",
+      "catalog": "en_tr_temel/catalog.json",
+      "glossary": "en_tr_temel/glossary.yaml",
+      "expect_passed": false,
+      "expected": {
+        "H-201-title": [],
+        "H-202-title": ["YUZDE_KONUM"],
+        "H-203-bullet": ["NUM_AYIRICI"],
+        "H-204-bullet": [],
+        "H-205-title": ["TR_BUYUK_I"],
+        "H-206-bullet": ["NUM_AYIRICI"]
+      }
+    },
+    {
+      "name": "temiz katalog (yanlış alarm yok)",
+      "catalog": "temiz/catalog.json",
+      "glossary": "temiz/glossary.yaml",
+      "config": "temiz/config.toml",
+      "expect_passed": true,
+      "expected": {
+        "T-301-title": [],
+        "T-302-bullet": [],
+        "T-303-description": [],
+        "T-304-bullet": [],
+        "T-305-title": []
+      }
+    }
+  ]
+}

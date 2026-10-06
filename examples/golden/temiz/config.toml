@@ -1,0 +1,15 @@
+# Temiz katalog vakası: kural motoru burada hiçbir şey yakalamamalı (yanlış alarm testi).
+gate = 0.90
+fail_on_critical = true
+max_expansion = 1.8
+
+[field_limits]
+title = 70
+bullet = 140
+description = 2000
+
+[weights]
+terminology = 0.35
+tokens = 0.35
+turkish = 0.15
+length = 0.15

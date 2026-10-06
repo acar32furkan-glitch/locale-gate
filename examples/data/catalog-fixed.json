@@ -1,0 +1,83 @@
+{
+  "source_locale": "tr",
+  "target_locale": "en",
+  "field_limits": {
+    "title": 70,
+    "bullet": 140,
+    "description": 2000
+  },
+  "segments": [
+    {
+      "id": "P-1001-title",
+      "field": "title",
+      "source": "Hakiki Deri Cüzdan, 12 Kart Gözlü, RFID Korumalı",
+      "target": "Genuine Leather Wallet, 12 Card Slots, RFID Protected"
+    },
+    {
+      "id": "P-1002-title",
+      "field": "title",
+      "source": "Şişme Mont Kadın, Su İtici Kumaş, Kapüşonlu",
+      "target": "Women's Puffer Jacket, Water Repellent Fabric, Hooded"
+    },
+    {
+      "id": "P-1003-bullet",
+      "field": "bullet",
+      "source": "45 x 30 x 12 cm ölçülerinde, yalnızca 780 gram ağırlığında",
+      "target": "Measures 45 x 30 x 12 cm and weighs only 780 grams"
+    },
+    {
+      "id": "P-1004-bullet",
+      "field": "bullet",
+      "source": "%100 pamuk, 30 derecede yıkanabilir, ütü gerektirmez",
+      "target": "100% cotton, machine washable at 30 degrees, no ironing needed"
+    },
+    {
+      "id": "P-1005-description",
+      "field": "description",
+      "source": "Siparişiniz {order_id} numarasıyla 2 iş günü içinde kargoya verilir.",
+      "target": "Your order {order_id} will be shipped within 2 business days."
+    },
+    {
+      "id": "P-1006-description",
+      "field": "description",
+      "source": "500 TL üzeri alışverişlerde kargo ücreti alınmaz; iade süresi 14 gündür.",
+      "target": "No shipping fee is charged on orders over 500 TL; the return period is 14 days."
+    },
+    {
+      "id": "P-1007-title",
+      "field": "title",
+      "source": "Kadın Kışlık Şişme Mont",
+      "target": "Women's Winter Puffer Jacket"
+    },
+    {
+      "id": "P-1008-title",
+      "field": "title",
+      "source": "Deri Cüzdan",
+      "target": "Genuine Leather Wallet with RFID Protection"
+    },
+    {
+      "id": "P-1009-title",
+      "field": "title",
+      "source": "Ürün Özellikleri ve Ölçüler",
+      "target": "Product Features and Measurements"
+    },
+    {
+      "id": "P-1010-bullet",
+      "field": "bullet",
+      "source": "Her beden için ayrı kalıp; beden tablosuna bakınız",
+      "target": "Separate pattern for each size; please check the size chart"
+    },
+    {
+      "id": "P-1011-description",
+      "field": "description",
+      "source": "Ücretsiz kargo ve 14 gün içinde koşulsuz iade hakkı.",
+      "target": "Free shipping and unconditional returns within 14 days."
+    },
+    {
+      "id": "P-1012-bullet",
+      "field": "bullet",
+      "source": "Model numarası B-2000, 256 GB depolama",
+      "target": "Model B-2000 with 256 GB storage"
+    }
+  ]
+}

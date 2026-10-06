@@ -1,0 +1,42 @@
+{
+  "source_locale": "en",
+  "target_locale": "tr",
+  "segments": [
+    {
+      "id": "H-201-title",
+      "field": "title",
+      "source": "Save 20% on winter coats",
+      "target": "Kışlık montlarda %20 indirim"
+    },
+    {
+      "id": "H-202-title",
+      "field": "title",
+      "source": "20% discount on winter coats",
+      "target": "Kışlık montlarda 20% indirim"
+    },
+    {
+      "id": "H-203-bullet",
+      "field": "bullet",
+      "source": "Weight 2.5 kg, 45 x 30 cm",
+      "target": "Ağırlık 2.5 kg, 45 x 30 cm"
+    },
+    {
+      "id": "H-204-bullet",
+      "field": "bullet",
+      "source": "Weight 2.5 kg",
+      "target": "Ağırlık 2,5 kg"
+    },
+    {
+      "id": "H-205-title",
+      "field": "title",
+      "source": "Delivery in Istanbul",
+      "target": "ISTANBUL'DA TESLİM"
+    },
+    {
+      "id": "H-206-bullet",
+      "field": "bullet",
+      "source": "Total 1,234.56 TL",
+      "target": "Toplam 1,234.56 TL"
+    }
+  ]
+}

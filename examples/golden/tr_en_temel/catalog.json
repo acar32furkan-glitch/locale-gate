@@ -1,0 +1,42 @@
+{
+  "source_locale": "tr",
+  "target_locale": "en",
+  "segments": [
+    {
+      "id": "G-101-title",
+      "field": "title",
+      "source": "Şişme Mont Kadın, Su İtici Kumaş",
+      "target": "Women's Puffer Jacket, Water Repellent Fabric"
+    },
+    {
+      "id": "G-102-title",
+      "field": "title",
+      "source": "Şişme Mont Kadın",
+      "target": "Womens Puffer Coat"
+    },
+    {
+      "id": "G-103-bullet",
+      "field": "bullet",
+      "source": "45 x 30 x 12 cm ölçülerinde 780 gram",
+      "target": "45 x 30 x 12 cm and only 0.78 kg"
+    },
+    {
+      "id": "G-104-description",
+      "field": "description",
+      "source": "Siparişiniz {order_id} numarasıyla 2 iş günü içinde kargoya verilir.",
+      "target": "Your order {order_id} will be shipped within 2 business days."
+    },
+    {
+      "id": "G-105-title",
+      "field": "title",
+      "source": "Ürün Ölçüleri ve Bakım",
+      "target": "Urun Olculeri ve Bakim"
+    },
+    {
+      "id": "G-106-title",
+      "field": "title",
+      "source": "Kadın Kışlık Şişme Mont",
+      "target": "Kadın Kışlık Şişme Mont"
+    }
+  ]
+}
