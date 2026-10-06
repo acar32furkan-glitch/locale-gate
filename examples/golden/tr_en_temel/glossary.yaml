@@ -1,0 +1,9 @@
+source_locale: tr
+target_locale: en
+
+terms:
+  - source: şişme mont
+    target: puffer jacket
+    forbidden: [puffer coat]
+  - source: su itici
+    target: water repellent

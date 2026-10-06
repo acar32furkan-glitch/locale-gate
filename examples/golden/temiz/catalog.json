@@ -1,0 +1,36 @@
+{
+  "source_locale": "tr",
+  "target_locale": "en",
+  "segments": [
+    {
+      "id": "T-301-title",
+      "field": "title",
+      "source": "Hakiki Deri Cüzdan, RFID Korumalı",
+      "target": "Genuine Leather Wallet, RFID Protected"
+    },
+    {
+      "id": "T-302-bullet",
+      "field": "bullet",
+      "source": "Ücretsiz kargo ve 14 gün içinde iade hakkı",
+      "target": "Free shipping and returns within 14 days"
+    },
+    {
+      "id": "T-303-description",
+      "field": "description",
+      "source": "Siparişiniz {order_id} numarasıyla 2 iş günü içinde kargoya verilir.",
+      "target": "Your order {order_id} ships within 2 business days."
+    },
+    {
+      "id": "T-304-bullet",
+      "field": "bullet",
+      "source": "45 x 30 cm ölçülerinde, 780 gram",
+      "target": "45 x 30 cm and 780 grams"
+    },
+    {
+      "id": "T-305-title",
+      "field": "title",
+      "source": "Kadın Kışlık Mont",
+      "target": "Women's Winter Coat"
+    }
+  ]
+}

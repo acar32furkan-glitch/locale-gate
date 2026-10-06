@@ -1,0 +1,6 @@
+source_locale: en
+target_locale: tr
+
+terms:
+  - source: free shipping
+    target: ücretsiz kargo

@@ -1,0 +1,41 @@
+# locale-gate sözlüğü — TR → EN
+#
+# `target` zorunlu karşılıktır: kaynak metinde `source` geçiyorsa hedef metinde `target` bulunmak
+# zorundadır. `forbidden` altındaki varyantlar yasaklıdır (yaygın yanlış çeviriler).
+source_locale: tr
+target_locale: en
+
+terms:
+  - source: hakiki deri
+    target: genuine leather
+    forbidden: [real leather, true leather]
+    note: Marka standardı — "real leather" kullanılmaz
+
+  - source: şişme mont
+    target: puffer jacket
+    forbidden: [puffer coat, inflatable coat]
+    note: Kategori adı sözlükte sabit
+
+  - source: su itici
+    target: water repellent
+    forbidden: [water proof]
+
+  - source: kargo ücreti
+    target: shipping fee
+    forbidden: [cargo fee, cargo price]
+    note: Ödeme sayfası metinleriyle aynı olmalı
+
+  - source: ücretsiz kargo
+    target: free shipping
+    forbidden: [free cargo]
+
+  - source: beden
+    target: size
+    forbidden: [body, stature]
+    note: Giyim alanında "beden" daima "size"
+
+  - source: "%100 pamuk"
+    target: 100% cotton
+
+  - source: yıkanabilir
+    target: washable
