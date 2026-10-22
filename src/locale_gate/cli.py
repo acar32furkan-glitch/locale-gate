@@ -20,7 +20,7 @@ from pathlib import Path
 from locale_gate import __version__
 from locale_gate.catalog import load_catalog
 from locale_gate.config import GateConfig
-from locale_gate.gate import GateInputError, decide, run_gate
+from locale_gate.gate import GateInputError, decide, effective_threshold, run_gate
 from locale_gate.glossary import load_glossary
 from locale_gate.golden import render_golden_text, run_golden
 from locale_gate.render import render_markdown, render_report_text
@@ -69,6 +69,7 @@ def cmd_check(args: argparse.Namespace) -> int:
     config = GateConfig.load(args.config)
     report = run_gate(catalog, glossary, config, now=datetime.now(tz=UTC))
     passed, reasons = decide(report, config, fail_under=args.fail_under)
+    threshold = effective_threshold(config, args.fail_under)
 
     if args.as_json or args.report:
         payload = {
@@ -78,7 +79,7 @@ def cmd_check(args: argparse.Namespace) -> int:
             "target_locale": report.target_locale,
             "segments": report.segments,
             "score": report.score,
-            "gate": report.gate if args.fail_under is None else args.fail_under,
+            "gate": threshold,
             "passed": passed,
             "reasons": reasons,
             "stats": [
@@ -109,6 +110,7 @@ def cmd_check(args: argparse.Namespace) -> int:
                 reasons=reasons,
                 catalog_path=str(args.catalog),
                 max_findings=args.max_findings,
+                gate=threshold,
             )
         )
 
@@ -118,7 +120,7 @@ def cmd_check(args: argparse.Namespace) -> int:
             print("uyarı: GITHUB_STEP_SUMMARY tanımlı değil, iş özeti yazılmadı.", file=sys.stderr)
         else:
             with Path(target).open("a", encoding="utf-8") as handle:
-                handle.write(render_markdown(report, passed=passed, reasons=reasons) + "\n")
+                handle.write(render_markdown(report, passed=passed, reasons=reasons, gate=threshold) + "\n")
 
     return EXIT_OK if passed else EXIT_FAILED
 

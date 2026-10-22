@@ -85,6 +85,27 @@ def test_rapor_dosyasi_yazilir(tmp_path: Path, golden_dir: Path) -> None:
     assert payload["passed"] is True
 
 
+def test_fail_under_ekranda_ve_json_sozlesmesinde_gorunur(capsys: pytest.CaptureFixture[str], golden_dir: Path) -> None:
+    """`--fail-under` kararı değiştiriyorsa çıktıdaki eşik de onu göstermeli (kalibrasyon için şart)."""
+    main(["check", str(golden_dir / DIRTY), "--glossary", str(golden_dir / DIRTY_GLOSSARY), "--fail-under", "0.42"])
+    out = capsys.readouterr().out
+    assert "eşik 0.420" in out
+
+    main(
+        [
+            "check",
+            str(golden_dir / DIRTY),
+            "--glossary",
+            str(golden_dir / DIRTY_GLOSSARY),
+            "--fail-under",
+            "0.42",
+            "--json",
+        ]
+    )
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["gate"] == pytest.approx(0.42)
+
+
 def test_github_ozeti_yazilir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, golden_dir: Path) -> None:
     summary = tmp_path / "summary.md"
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))

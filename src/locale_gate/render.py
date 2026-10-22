@@ -19,8 +19,14 @@ def render_report_text(
     reasons: list[str] | None = None,
     catalog_path: str = "",
     max_findings: int | None = None,
+    gate: float | None = None,
 ) -> str:
-    """Render the Turkish console report."""
+    """Render the Turkish console report.
+
+    ``gate`` is the threshold the decision actually used (``--fail-under`` beats the config);
+    it defaults to the threshold recorded in the report.
+    """
+    threshold = report.gate if gate is None else gate
     lines: list[str] = []
     lines.append("ÇEVİRİ KALİTE KAPISI")
     lines.append(
@@ -28,7 +34,7 @@ def render_report_text(
         + (f"  ·  katalog: {catalog_path}" if catalog_path else "")
     )
     lines.append(
-        f"  skor: {report.score:.3f} / eşik {report.gate:.3f}  ·  "
+        f"  skor: {report.score:.3f} / eşik {threshold:.3f}  ·  "
         f"KRİTİK {report.critical_count}  ·  UYARI {report.count(Severity.WARNING)}  ·  "
         f"BİLGİ {report.count(Severity.INFO)}"
     )
@@ -72,12 +78,20 @@ def render_report_text(
     return "\n".join(lines)
 
 
-def render_markdown(report: Report, *, passed: bool, reasons: list[str] | None = None, top: int = 10) -> str:
+def render_markdown(
+    report: Report,
+    *,
+    passed: bool,
+    reasons: list[str] | None = None,
+    top: int = 10,
+    gate: float | None = None,
+) -> str:
     """Render a compact Markdown summary (PR yorumu veya iş özeti olarak)."""
+    threshold = report.gate if gate is None else gate
     lines = [
         f"### Çeviri kalite kapısı — {report.source_locale} → {report.target_locale}",
         "",
-        f"**Skor:** {report.score:.3f} / eşik {report.gate:.3f} → " + ("GEÇTİ ✔" if passed else "KALDI ✘"),
+        f"**Skor:** {report.score:.3f} / eşik {threshold:.3f} → " + ("GEÇTİ ✔" if passed else "KALDI ✘"),
         "",
         f"- segment: {report.segments}",
         (

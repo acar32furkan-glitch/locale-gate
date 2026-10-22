@@ -90,9 +90,14 @@ def run_gate(
     )
 
 
+def effective_threshold(config: GateConfig, fail_under: float | None = None) -> float:
+    """Return the threshold actually used: ``--fail-under`` beats the config value."""
+    return config.gate if fail_under is None else fail_under
+
+
 def decide(report: Report, config: GateConfig, *, fail_under: float | None = None) -> tuple[bool, list[str]]:
     """Return ``(passed, reasons)`` — two independent gates: score and critical findings."""
-    threshold = config.gate if fail_under is None else fail_under
+    threshold = effective_threshold(config, fail_under)
     reasons: list[str] = []
     if report.score < threshold:
         reasons.append(

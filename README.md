@@ -80,6 +80,9 @@ bullet = 120
 uv run locale-gate check catalog.json --glossary glossary.yaml --config locale-gate.toml --fail-under 0.9
 ```
 
+Eşiği kendi kataloğunuza göre **nasıl kalibre edeceğiniz** (bulgu borcunu ölçme, dondurma ve kademeli
+yükseltme): [docs/kalibrasyon.md](docs/kalibrasyon.md).
+
 ## Mimari
 
 ```text

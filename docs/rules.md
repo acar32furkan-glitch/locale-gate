@@ -79,3 +79,6 @@ segmentteki üç bulgu kuralı üç kez cezalandırmaz ve skor negatife düşmez
 - **%70 indirim benzeri anomali yok:** bu kapı fiyat doğrulamaz, yalnızca metni denetler.
 - **Kritik = mağazayı bozan hata:** yer tutucu kaybı (çalışma zamanı hatası), zorunlu sözlük
   karşılığının yokluğu (marka tutarsızlığı) ve çevrilmemiş segment (müşteri Türkçe metin görür).
+
+Bu değerler bir başlangıçtır; gerçek katalogda bulgu borcuna göre kalibre edilmeleri gerekir —
+adım adım yöntem ve ölçülmüş örnek: [kalibrasyon.md](kalibrasyon.md).
