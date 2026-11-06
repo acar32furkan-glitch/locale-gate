@@ -67,6 +67,25 @@ uv run locale-gate eval examples/golden                        # golden set regr
 `--github-summary` appends a Markdown report to the Actions job summary; the command exits **1**
 when the gate fails, breaking the PR. Catalogs can be JSON or CSV (`id,field,source,target,limit`).
 
+## Living with existing debt: `--baseline`
+
+If your catalog starts below the threshold, every PR turns red and the gate stops carrying
+information. Freeze the current findings once and let only **new** findings fail the gate:
+
+```bash
+# once: freeze the debt (exits 1, the report is still written)
+uv run locale-gate check content/catalog.json --glossary content/glossary.yaml --report content/baseline.json
+
+# in later PRs: only new findings can drop the gate
+uv run locale-gate check content/catalog.json --glossary content/glossary.yaml --baseline content/baseline.json
+```
+
+Findings are matched on `(code, segment_id, field)`; the score is **recomputed** from the remaining
+findings, while the raw score and the number of inherited findings stay in the report. A baseline
+from the opposite direction, a malformed baseline file, and `--baseline` combined with `--report`
+are all rejected with exit code **2**. Details and measured output:
+[docs/baseline.md](docs/baseline.md) (Turkish).
+
 ## Your own thresholds
 
 ```toml

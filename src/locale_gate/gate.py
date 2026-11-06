@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from datetime import UTC, datetime
 
 from locale_gate.catalog import Catalog
@@ -35,6 +36,22 @@ def _validate(catalog: Catalog, glossary: Glossary, config: GateConfig) -> None:
         raise GateInputError(msg)
 
 
+def weighted_score(stats: Iterable[RuleStat], weights: Mapping[str, float]) -> float:
+    """Kural istatistiklerinden ağırlıklı skoru hesapla.
+
+    Ağırlığı sıfır olan ve hiç segment denetlememiş kurallar paydaya girmez: denenmemiş bir kural
+    skoru yapay olarak yükseltmesin. Taban uygulanırken de aynı fonksiyon kullanılır — iki ayrı
+    skor formülü bakım sırasında kaçınılmaz olarak birbirinden ayrışır.
+    """
+    weighted = [
+        (weights.get(stat.rule, 0.0), stat) for stat in stats if weights.get(stat.rule, 0.0) > 0 and stat.checked > 0
+    ]
+    total_weight = sum(weight for weight, _ in weighted)
+    if total_weight == 0:
+        return 1.0
+    return sum(weight * stat.score for weight, stat in weighted) / total_weight
+
+
 def run_gate(
     catalog: Catalog,
     glossary: Glossary | None = None,
@@ -64,9 +81,7 @@ def run_gate(
         )
 
     weights = limits.normalized_weights()
-    weighted = [(weights[stat.rule], stat) for stat in stats if weights.get(stat.rule, 0.0) > 0 and stat.checked > 0]
-    total_weight = sum(weight for weight, _ in weighted)
-    score = 1.0 if total_weight == 0 else sum(weight * stat.score for weight, stat in weighted) / total_weight
+    score = weighted_score(stats, weights)
 
     ordered = tuple(
         sorted(

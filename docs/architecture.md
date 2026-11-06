@@ -33,6 +33,7 @@ flowchart TD
 | `rules/` | Dört bağımsız kural | Her kural `RuleContext` alır, `RuleOutcome` döndürür |
 | `gate.py` | Kuralları çalıştırır, skoru ve kararı üretir | `decide()` iki bağımsız kapı: skor ve kritik bulgu |
 | `golden.py` | Altın set (regresyon) koşusu | Beklenen kodlar segment bazında karşılaştırılır |
+| `baseline.py` | Bilinen bulgu borcunu kapının dışında tutar | Kimlik `(code, segment_id, field)`; skor kalan bulgulardan yeniden hesaplanır |
 | `render.py` | İnsan tarafı çıktı | Konsol, Markdown, Actions iş özeti |
 | `cli.py` | Komutlar ve çıkış kodları | `0` geçti · `1` kapı düştü · `2` girdi hatası |
 

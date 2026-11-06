@@ -63,6 +63,24 @@ uv run locale-gate eval examples/golden                     # altın set regresy
 `--github-summary` iş özetine (Actions sekmesi) Markdown raporu ekler; komut kapı düşerse **1**
 koduyla çıkar ve PR'ı kırar. Katalog JSON veya CSV olabilir (`id,field,source,target,limit`).
 
+## Mevcut borçla yaşamak: `--baseline`
+
+Katalog ilk günden eşiğin altındaysa her PR kırmızı olur ve kapı bilgi taşımaz. Önceki koşunun
+raporunu taban alıp **yalnızca yeni bulguları** kapıya sokabilirsiniz:
+
+```bash
+# bir kez: borcu dondur (çıkış kodu 1, rapor yine yazılır)
+uv run locale-gate check content/catalog.json --glossary content/glossary.yaml --report content/taban.json
+
+# sonraki PR'larda: yalnızca yeni bulgu kapıyı düşürür
+uv run locale-gate check content/catalog.json --glossary content/glossary.yaml --baseline content/taban.json
+```
+
+Bulgular `(code, segment_id, field)` üçlüsüyle eşlenir; skor kalan bulgulardan **yeniden** hesaplanır,
+ham skor ve devralınan bulgu sayısı raporda kalır. Ters yön, bozuk taban ve `--baseline` + `--report`
+birlikte kullanımı çıkış kodu **2** ile reddedilir. Ayrıntı ve ölçülmüş çıktılar:
+[docs/baseline.md](docs/baseline.md).
+
 ## Kendi eşikleriniz
 
 ```toml
