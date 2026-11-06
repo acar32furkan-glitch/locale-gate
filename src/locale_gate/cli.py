@@ -18,6 +18,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from locale_gate import __version__
+from locale_gate.baseline import BaselineSummary, apply_baseline, load_baseline
 from locale_gate.catalog import load_catalog
 from locale_gate.config import GateConfig
 from locale_gate.gate import GateInputError, decide, effective_threshold, run_gate
@@ -47,6 +48,12 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--fail-under", type=float, default=None, help="Skor eşiğini geçici olarak değiştir.")
     check.add_argument("--json", action="store_true", dest="as_json", help="Raporu JSON olarak ver.")
     check.add_argument("--report", type=Path, default=None, help="Raporu bu dosyaya da yaz (JSON).")
+    check.add_argument(
+        "--baseline",
+        type=Path,
+        default=None,
+        help="Önceki rapor (JSON): yalnızca YENİ bulgular skora ve kapıya girer.",
+    )
     check.add_argument("--max-findings", type=int, default=20, help="Konsolda gösterilecek en fazla bulgu.")
     check.add_argument(
         "--github-summary",
@@ -64,10 +71,22 @@ def build_parser() -> argparse.ArgumentParser:
 
 def cmd_check(args: argparse.Namespace) -> int:
     """Run the gate on one catalog and report the decision."""
+    if args.baseline is not None and args.report is not None:
+        msg = (
+            "--baseline ile --report birlikte kullanılamaz: taban raporu TAM bulgu listesi taşımalı. "
+            "Önce --report ile tabanı üretin, sonra --baseline ile denetleyin."
+        )
+        raise GateInputError(msg)
+
     catalog = load_catalog(args.catalog)
     glossary = load_glossary(args.glossary)
     config = GateConfig.load(args.config)
     report = run_gate(catalog, glossary, config, now=datetime.now(tz=UTC))
+
+    summary: BaselineSummary | None = None
+    if args.baseline is not None:
+        report, summary = apply_baseline(report, load_baseline(args.baseline), config.normalized_weights())
+
     passed, reasons = decide(report, config, fail_under=args.fail_under)
     threshold = effective_threshold(config, args.fail_under)
 
@@ -96,6 +115,8 @@ def cmd_check(args: argparse.Namespace) -> int:
             "codes": report.by_code(),
             "findings": [finding.model_dump(mode="json") for finding in report.findings],
         }
+        if summary is not None:
+            payload["baseline"] = summary.to_json()
         if args.report:
             args.report.parent.mkdir(parents=True, exist_ok=True)
             args.report.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -111,6 +132,7 @@ def cmd_check(args: argparse.Namespace) -> int:
                 catalog_path=str(args.catalog),
                 max_findings=args.max_findings,
                 gate=threshold,
+                baseline=summary,
             )
         )
 
@@ -120,7 +142,9 @@ def cmd_check(args: argparse.Namespace) -> int:
             print("uyarı: GITHUB_STEP_SUMMARY tanımlı değil, iş özeti yazılmadı.", file=sys.stderr)
         else:
             with Path(target).open("a", encoding="utf-8") as handle:
-                handle.write(render_markdown(report, passed=passed, reasons=reasons, gate=threshold) + "\n")
+                handle.write(
+                    render_markdown(report, passed=passed, reasons=reasons, gate=threshold, baseline=summary) + "\n"
+                )
 
     return EXIT_OK if passed else EXIT_FAILED
 

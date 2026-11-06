@@ -6,6 +6,7 @@ Metinler Türkçedir: kapıyı okuyan kişi içerik ekibidir. Sayısal alanlar (
 
 from __future__ import annotations
 
+from locale_gate.baseline import BaselineSummary
 from locale_gate.models import Report, Severity
 
 _BULLET = {Severity.CRITICAL: "[KRİTİK]", Severity.WARNING: "[UYARI]", Severity.INFO: "[BİLGİ]"}
@@ -20,11 +21,13 @@ def render_report_text(
     catalog_path: str = "",
     max_findings: int | None = None,
     gate: float | None = None,
+    baseline: BaselineSummary | None = None,
 ) -> str:
     """Render the Turkish console report.
 
     ``gate`` is the threshold the decision actually used (``--fail-under`` beats the config);
-    it defaults to the threshold recorded in the report.
+    it defaults to the threshold recorded in the report. When ``baseline`` is given, ``report``
+    already carries only the new findings and the score computed from them.
     """
     threshold = report.gate if gate is None else gate
     lines: list[str] = []
@@ -38,6 +41,9 @@ def render_report_text(
         f"KRİTİK {report.critical_count}  ·  UYARI {report.count(Severity.WARNING)}  ·  "
         f"BİLGİ {report.count(Severity.INFO)}"
     )
+    if baseline is not None:
+        lines.append(f"  {baseline.text_tr()}")
+        lines.append("  (skor yalnızca YENİ bulgulardan hesaplandı; taban dosyası güncellenmedi)")
     lines.append("")
     lines.append("KURAL BAŞARI ORANLARI")
     width = max((len(stat.label_tr) for stat in report.stats), default=10)
@@ -52,7 +58,7 @@ def render_report_text(
 
     if report.findings:
         lines.append("")
-        lines.append("BULGULAR")
+        lines.append("YENİ BULGULAR" if baseline is not None else "BULGULAR")
         shown = report.findings if max_findings is None else report.findings[:max_findings]
         for index, finding in enumerate(shown, start=1):
             lines.append(f"{index:>3}. {_BULLET[finding.severity]} [{finding.code}] {finding.message_tr}")
@@ -64,7 +70,10 @@ def render_report_text(
             lines.append(f"  … {hidden} bulgu daha var (--max-findings ile sınırı artırın).")
     else:
         lines.append("")
-        lines.append("Bulgu yok. 🎉")
+        if baseline is not None:
+            lines.append(f"Yeni bulgu yok; {baseline.suppressed} bilinen bulgu tabanda devralındı.")
+        else:
+            lines.append("Bulgu yok. 🎉")
 
     lines.append("")
     if passed is None:
@@ -85,6 +94,7 @@ def render_markdown(
     reasons: list[str] | None = None,
     top: int = 10,
     gate: float | None = None,
+    baseline: BaselineSummary | None = None,
 ) -> str:
     """Render a compact Markdown summary (PR yorumu veya iş özeti olarak)."""
     threshold = report.gate if gate is None else gate
@@ -98,10 +108,19 @@ def render_markdown(
             f"- kritik: {report.critical_count} · uyarı: {report.count(Severity.WARNING)}"
             f" · bilgi: {report.count(Severity.INFO)}"
         ),
-        "",
-        "| Kural | Başarı | Bulgu | Kapsam |",
-        "|-------|--------|-------|--------|",
     ]
+    if baseline is not None:
+        lines.append(
+            f"- taban: {baseline.suppressed} bilinen bulgu devralındı · {baseline.new} yeni"
+            f" · {baseline.stale} kapanmış (ham skor {baseline.raw_score:.3f})"
+        )
+    lines.extend(
+        [
+            "",
+            "| Kural | Başarı | Bulgu | Kapsam |",
+            "|-------|--------|-------|--------|",
+        ]
+    )
     lines.extend(
         f"| {stat.label_tr} (`{stat.rule}`) | {stat.score * 100:.1f}% | {stat.failed} | {stat.checked or '—'} |"
         for stat in report.stats

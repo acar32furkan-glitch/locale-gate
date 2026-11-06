@@ -3,6 +3,21 @@
 Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.1.0/) biçimini izler ve proje
 [Semantic Versioning](https://semver.org/lang/tr/) kullanır.
 
+## [Unreleased]
+
+### Eklendi
+- **Taban çizgisi (`--baseline report.json`):** önceki koşunun raporunu taban alıp yalnızca **yeni**
+  bulguları skora ve kritik kapısına sokar; mevcut bulgu borcu PR'ı kırmaz. Bulgular
+  `(code, segment_id, field)` üçlüsüyle eşlenir, skor kalan bulgulardan yeniden hesaplanır, ham skor
+  `baseline.raw_score` olarak raporda kalır. Düzeltilen bulgu `stale` sayılır.
+- Taban güvenliği: ters dil çifti, geçersiz JSON, eksik `findings`/kimlik alanı ve `--baseline` +
+  `--report` birlikte kullanımı çıkış kodu **2** ile reddedilir (sessiz yutma yok).
+- Konsol ve Markdown çıktısı taban satırını yazar ("12 bilinen bulgu devralındı · 0 yeni").
+
+### Değişti
+- Ağırlıklı skor formülü `gate.weighted_score()` içine alındı; `run_gate` ve taban filtresi aynı
+  fonksiyonu kullanıyor — iki ayrı formül bakım sırasında kaçınılmaz olarak ayrışırdı.
+
 ## [0.1.0] - 2026-10-06
 
 ### Eklendi
