@@ -3,6 +3,7 @@
 locale-gate check <katalog> [--glossary ...] [--config ...] [--fail-under 0.95]
 locale-gate eval  <altın-set-klasörü>
 locale-gate rules                     # kural sözlüğü özeti
+locale-gate glossary lint <sözlük>     # sözlüğün kendi içindeki çelişkiler
 
 Çıkış kodları: 0 geçti · 1 kapı düştü · 2 girdi/kullanım hatası.
 """
@@ -23,6 +24,7 @@ from locale_gate.catalog import load_catalog
 from locale_gate.config import GateConfig
 from locale_gate.gate import GateInputError, decide, effective_threshold, run_gate
 from locale_gate.glossary import load_glossary
+from locale_gate.glossary_lint import lint_glossary, render_lint_text
 from locale_gate.golden import render_golden_text, run_golden
 from locale_gate.render import render_markdown, render_report_text
 from locale_gate.rules import RULE_LABELS, RULES
@@ -66,6 +68,15 @@ def build_parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--json", action="store_true", dest="as_json", help="Sonucu JSON olarak ver.")
 
     sub.add_parser("rules", help="Kural listesini ve ağırlıklarını göster.")
+
+    glossary = sub.add_parser("glossary", help="Sözlük dosyası araçları.")
+    glossary_sub = glossary.add_subparsers(dest="glossary_command")
+    lint = glossary_sub.add_parser(
+        "lint",
+        help="Sözlüğün kendi içindeki çelişkileri denetle (yinelenen kayıt, boş karşılık, çakışma).",
+    )
+    lint.add_argument("path", type=Path, help="Sözlük dosyası (YAML veya JSON).")
+    lint.add_argument("--json", action="store_true", dest="as_json", help="Sonucu JSON olarak ver.")
     return parser
 
 
@@ -175,6 +186,25 @@ def cmd_rules(_args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_glossary(args: argparse.Namespace) -> int:
+    """Sözlük alt komutlarını yönlendir."""
+    if args.glossary_command is None:
+        print("kullanım: locale-gate glossary lint <sözlük dosyası>", file=sys.stderr)
+        return EXIT_INPUT_ERROR
+    return cmd_glossary_lint(args)
+
+
+def cmd_glossary_lint(args: argparse.Namespace) -> int:
+    """Sözlüğü kendi içinde denetle; bulgu varsa kapı düşer (çıkış 1)."""
+    glossary = load_glossary(args.path)
+    result = lint_glossary(glossary, path=str(args.path))
+    if args.as_json:
+        print(json.dumps(result.to_json(), ensure_ascii=False, indent=2))
+    else:
+        print(render_lint_text(result))
+    return EXIT_OK if result.ok else EXIT_FAILED
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Entry point; maps errors to documented exit codes."""
     parser = build_parser()
@@ -182,7 +212,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command is None:
         parser.print_help()
         return EXIT_INPUT_ERROR
-    handlers = {"check": cmd_check, "eval": cmd_eval, "rules": cmd_rules}
+    handlers = {"check": cmd_check, "eval": cmd_eval, "rules": cmd_rules, "glossary": cmd_glossary}
     try:
         return handlers[args.command](args)
     except (GateInputError, ValueError) as exc:

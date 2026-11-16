@@ -15,6 +15,29 @@ Kapı dört kuralı çalıştırır. Her kural **kendi kapsamını** bildirir (`
 - Kelime sınırı Türkçe harfleri tanır: `beden` eşleşir, `bedenler` eşleşmez; `%100 pamuk` gibi
   sembolle başlayan terimler de doğru eşleşir (`re.compile` `\b` yerine açık lookaround kullanır).
 
+### Sözlük yapılandırma bulguları (`glossary lint`)
+
+Yukarıdaki iki kod kataloğu denetler; `glossary lint` ise **sözlüğün kendisini** denetler. Ayrı bir
+komut olmasının nedeni: bozuk kayıt katalogda bulgu gibi görünür, oysa hata sözlüktedir — düzeltme
+yerini göstermeden yapılan her ayar katalog metnini gereksiz yere değiştirir.
+
+| Kod | Koşul | Kural motorundaki gerçek sonucu |
+|-----|-------|----------------------------------|
+| `SOZLUK_HEDEF_BOS` | `target: ""` (boş metin) | Desen yalnızca boş metne uyar; terimi içeren her segment `TERM_EKSIK` alır |
+| `SOZLUK_KAYNAK_BOS` | `source` boş ya da yalnızca boşluk | Desen hiçbir segmentle eşleşmez — kayıt ölü ağırlıktır |
+| `SOZLUK_YINELENEN` | İki kayıt aynı kaynak desenini tanımlıyor | Aynı segment iki kez denetlenir, bulgu sayısı çiftlenir |
+| `SOZLUK_CELISKILI_HEDEF` | Aynı kaynak, iki farklı `target` | Her iki doğru çeviri de en az bir `TERM_EKSIK` alır (ölçüldü: iki yön de düşer) |
+| `SOZLUK_YASAK_HEDEFLE_CAKISIYOR` | Yasaklı varyant zorunlu karşılığın içinde geçiyor | Sözlüğe uyan çeviri `TERM_YASAK` alır — kural kendisiyle çelişir |
+| `SOZLUK_YASAK_BOS` | `forbidden` listesinde boş metin | Aranan desen anlamsız; sonuç öngörülemez |
+| `SOZLUK_YASAK_TEKRAR` | Aynı varyant listede iki kez (büyük/küçük harf farkı dahil) | Tek segment için iki `TERM_YASAK` bulgusu |
+
+- **Yinelenen kayıt, kural motorunun kendi eşlemesiyle bulunur**, elle `lower()` ile değil:
+  “Kargo Ücreti” ile “kargo ücreti” aynı kayıttır (kapı zaten harfe duyarsız eşler), ama biri
+  `case_sensitive: true` ise ayrı metinleri yakaladıkları için yinelenen sayılmaz.
+- `target: null` (alanın yokluğu) bulgu değildir: kısa biçim yalnızca yasaklı varyant denetimi bırakır.
+- Çıkış kodları: `0` temiz · `1` yapılandırma bulgusu var · `2` dosya okunamadı/geçersiz.
+- Kasıtlı hatalı örnek: `examples/data/glossary-hatali.yaml` (3 bulgu üretir, testle sabitlenmiştir).
+
 ## 2. Korunan ifadeler (`tokens`)
 
 | Kod | Koşul | Önem |

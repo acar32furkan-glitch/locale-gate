@@ -6,6 +6,15 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.1.0/) biçimini izle
 ## [Unreleased]
 
 ### Eklendi
+- **Sözlük denetimi (`glossary lint <dosya>`):** sözlüğü kural motoru çalışmadan denetler ve yedi
+  yapılandırma bulgusunu kayıt numarasıyla verir: `SOZLUK_HEDEF_BOS` (`target: ""` — terimi içeren
+  her segment `TERM_EKSIK` alır), `SOZLUK_KAYNAK_BOS`, `SOZLUK_YINELENEN` (aynı desen iki kez →
+  bulgu sayısı çiftlenir), `SOZLUK_CELISKILI_HEDEF` (aynı kaynak iki karşılık → iki doğru çeviri de
+  düşer), `SOZLUK_YASAK_HEDEFLE_CAKISIYOR` (doğru çeviri `TERM_YASAK` alır), `SOZLUK_YASAK_BOS`,
+  `SOZLUK_YASAK_TEKRAR`. Bulgu varsa çıkış **1**, dosya okunamazsa **2**; `--json` sözleşmesi
+  (`path`, `terms`, `ok`, `codes`, `findings`). Yinelenen kayıt kapının kendi eşlemesiyle bulunur,
+  bu yüzden “Kargo Ücreti” ile “kargo ücreti” çakışır; `case_sensitive` farkı çakışmaz.
+- `examples/data/glossary-hatali.yaml`: belge ve testler için kasıtlı hatalı sözlük (3 bulgu).
 - **Taban çizgisi (`--baseline report.json`):** önceki koşunun raporunu taban alıp yalnızca **yeni**
   bulguları skora ve kritik kapısına sokar; mevcut bulgu borcu PR'ı kırmaz. Bulgular
   `(code, segment_id, field)` üçlüsüyle eşlenir, skor kalan bulgulardan yeniden hesaplanır, ham skor

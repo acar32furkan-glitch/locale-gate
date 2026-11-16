@@ -34,6 +34,9 @@ demo-fix: ## Aynı katalogun düzeltilmiş sürümü (kapı geçer)
 golden: ## Altın set regresyon testleri
 	$(PY) locale-gate eval examples/golden
 
+glossary-lint: ## Sözlüğün kendi tutarlılığını denetle
+	$(PY) locale-gate glossary lint examples/data/glossary.yaml
+
 demo-svg: ## README için SVG çıktı üret
 	$(PY) python scripts/make_demo_svg.py
 
@@ -41,4 +44,4 @@ clean: ## Temizlik
 	rm -rf .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage dist build
 	find . -name __pycache__ -type d -prune -exec rm -rf {} +
 
-.PHONY: help sync lint format type test cov check demo golden demo-svg clean
+.PHONY: help sync lint format type test cov check demo golden glossary-lint demo-svg clean

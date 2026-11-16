@@ -55,6 +55,7 @@ Rule codes, thresholds and their rationale: **[docs/rules.md](docs/rules.md)** (
 uv run locale-gate rules                                      # rule set + weights
 uv run locale-gate check examples/data/catalog.json --json     # the JSON contract for agents/CI
 uv run locale-gate eval examples/golden                        # golden set regression
+uv run locale-gate glossary lint examples/data/glossary.yaml    # the glossary's own consistency
 ```
 
 ## Using it in CI
@@ -85,6 +86,24 @@ findings, while the raw score and the number of inherited findings stay in the r
 from the opposite direction, a malformed baseline file, and `--baseline` combined with `--report`
 are all rejected with exit code **2**. Details and measured output:
 [docs/baseline.md](docs/baseline.md) (Turkish).
+
+## Linting the glossary itself
+
+The glossary is the highest-leverage input of the gate, and one broken record makes the gate return
+a **silently wrong** decision: `target: ""` can never be found in a real translation (every segment
+mentioning the term gets `TERM_EKSIK`), two records for the same source double every finding, two
+different targets make every translation wrong, and a forbidden variant inside the required target
+flags the **correct** translation with `TERM_YASAK`. `glossary lint` reports all of these by record
+number, without running a catalog — exit **1** when anything is inconsistent:
+
+```bash
+uv run locale-gate glossary lint content/glossary.yaml
+```
+
+The seven codes and what each one actually does to the rule engine:
+[docs/rules.md](docs/rules.md#sözlük-yapılandırma-bulguları-glossary-lint) (Turkish). Duplicates are
+detected with the gate's own matching semantics, so "Kargo Ücreti" and "kargo ücreti" collide while
+a `case_sensitive: true` pair does not.
 
 ## Your own thresholds
 

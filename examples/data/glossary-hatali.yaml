@@ -1,0 +1,15 @@
+# KASITLI HATALI SÖZLÜK — `glossary lint` belgesi ve testleri için tutulur.
+# Bu dosya kural motoruna VERİLMEZ: kayıtlar bilerek çelişkilidir (bkz. docs/rules.md).
+source_locale: tr
+target_locale: en
+
+terms:
+  - source: kargo ücreti
+    target: shipping fee
+    forbidden: [cargo fee, cargo fee]
+
+  - source: Kargo Ücreti
+    target: shipping cost
+
+  - source: beden
+    target: ""

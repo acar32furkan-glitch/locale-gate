@@ -29,6 +29,7 @@ flowchart TD
 |-------|-----------|--------|
 | `catalog.py` | Segment listesini yükler (JSON/CSV) | Bozuk satırda satır numarasıyla hata verir |
 | `glossary.py` | Sözlüğü yükler ve terim desenlerini derler | Türkçe harf duyarlı kelime sınırı |
+| `glossary_lint.py` | Sözlüğün kendi içindeki çelişkileri bulur (`glossary lint`) | Yinelenen kayıt kapının kendi eşleme semantiğiyle, `casefold` ile değil |
 | `config.py` | Eşikler, ağırlıklar, alan sınırları | TOML/JSON; bilinmeyen alan reddedilir (yazım hatası koruması) |
 | `rules/` | Dört bağımsız kural | Her kural `RuleContext` alır, `RuleOutcome` döndürür |
 | `gate.py` | Kuralları çalıştırır, skoru ve kararı üretir | `decide()` iki bağımsız kapı: skor ve kritik bulgu |

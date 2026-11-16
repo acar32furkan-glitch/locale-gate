@@ -51,6 +51,7 @@ Kod listesi, eşikler ve gerekçeler: **[docs/rules.md](docs/rules.md)**
 uv run locale-gate rules                                   # kural seti + ağırlıklar
 uv run locale-gate check examples/data/catalog.json --json  # ajan/CI için JSON sözleşmesi
 uv run locale-gate eval examples/golden                     # altın set regresyonu
+uv run locale-gate glossary lint examples/data/glossary.yaml # sözlüğün kendi tutarlılığı
 ```
 
 ## CI'da kullanımı
@@ -80,6 +81,40 @@ Bulgular `(code, segment_id, field)` üçlüsüyle eşlenir; skor kalan bulgular
 ham skor ve devralınan bulgu sayısı raporda kalır. Ters yön, bozuk taban ve `--baseline` + `--report`
 birlikte kullanımı çıkış kodu **2** ile reddedilir. Ayrıntı ve ölçülmüş çıktılar:
 [docs/baseline.md](docs/baseline.md).
+
+## Sözlüğün kendisini denetle: `glossary lint`
+
+Kapının en yüksek getirili girdisi sözlüktür ve bozuk bir kayıt **sessizce** yanlış karar üretir:
+`target: ""` hiçbir gerçek çeviride bulunmaz (o terimi içeren her segment `TERM_EKSIK` alır), aynı
+kaynağın iki kaydı tek segmentte iki bulgu üretir, iki farklı karşılık tanımlıysa hiçbir çeviri doğru
+olamaz, yasaklı varyant zorunlu karşılığın içinde geçiyorsa **doğru** çeviri `TERM_YASAK` alır.
+`glossary lint` bunları katalog koşmadan, kayıt numarasıyla söyler:
+
+```bash
+uv run locale-gate glossary lint examples/data/glossary-hatali.yaml   # bulgu varsa çıkış 1
+```
+
+```text
+SÖZLÜK DENETİMİ
+  dosya: examples\data\glossary-hatali.yaml  ·  kayıt: 3  ·  bulgu: 3
+
+  1. [SOZLUK_YASAK_TEKRAR] yinelenen yasaklı varyant
+      durum  : Kayıt 1: “cargo fee” yasaklı listesinde birden fazla kez geçiyor — aynı segment için iki TERM_YASAK bulgusu üretilir.
+      çözüm  : Yinelenen varyantı silin.
+  2. [SOZLUK_CELISKILI_HEDEF] aynı kaynak, farklı karşılık
+      durum  : Kayıt 1 ve 2 aynı kaynak terimi farklı karşılıklarla tanımlıyor: “shipping fee” · “shipping cost”. Aynı anda iki karşılık arandığı için her çeviri en az bir TERM_EKSIK alır.
+      çözüm  : Tek kayıt bırakın ve geçerli karşılığı seçin; diğer kaydı silin.
+  3. [SOZLUK_HEDEF_BOS] boş zorunlu karşılık
+      durum  : Kayıt 3: “beden” için karşılık boş metin — boş metin hiçbir gerçek çeviride bulunmaz (desen yalnızca boş metne uyar), yani bu terimi içeren her segment TERM_EKSIK alır.
+      çözüm  : Karşılığı yazın ya da `target` alanını tamamen kaldırın (`target: null`): boş metin ile alanın yokluğu aynı şey değil — yokluk yalnızca yasaklı varyant denetimi bırakır.
+
+KARAR: 3 YAPILANDIRMA BULGUSU (kapı düştü)
+```
+
+Yinelenen kayıtlar kural motorunun **kendi** eşlemesiyle bulunur: “Kargo Ücreti” ile “kargo ücreti”
+aynı kayıttır, ama biri `case_sensitive: true` ise değildir. Yedi kodun tam listesi ve her birinin
+kural motorundaki gerçek sonucu:
+[docs/rules.md](docs/rules.md#sözlük-yapılandırma-bulguları-glossary-lint).
 
 ## Kendi eşikleriniz
 

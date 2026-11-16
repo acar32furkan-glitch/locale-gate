@@ -228,3 +228,47 @@ def test_surum_bayragi(capsys: pytest.CaptureFixture[str]) -> None:
         main(["--version"])
     assert excinfo.value.code == 0
     assert "locale-gate" in capsys.readouterr().out
+
+
+def _glossary_file(tmp_path: Path, terms: list[dict[str, object]]) -> Path:
+    path = tmp_path / "glossary.json"
+    path.write_text(json.dumps({"source_locale": "tr", "target_locale": "en", "terms": terms}), encoding="utf-8")
+    return path
+
+
+def test_glossary_lint_temiz_sozluk_sifir(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    path = _glossary_file(tmp_path, [{"source": "beden", "target": "size", "forbidden": ["body"]}])
+    assert main(["glossary", "lint", str(path)]) == 0
+    out = capsys.readouterr().out
+    assert "kayıt: 1  ·  bulgu: 0" in out
+    assert "KARAR: TEMİZ" in out
+
+
+def test_glossary_lint_bulgu_varsa_bir(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    path = _glossary_file(
+        tmp_path,
+        [{"source": "beden", "target": "size"}, {"source": "Beden", "target": "stature"}],
+    )
+    assert main(["glossary", "lint", str(path)]) == 1
+    out = capsys.readouterr().out
+    assert "SOZLUK_CELISKILI_HEDEF" in out
+    assert "KARAR: 1 YAPILANDIRMA BULGUSU" in out
+
+
+def test_glossary_lint_json_sozlesmesi(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    path = _glossary_file(tmp_path, [{"source": "beden", "target": ""}])
+    assert main(["glossary", "lint", str(path), "--json"]) == 1
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["ok"] is False
+    assert payload["codes"] == ["SOZLUK_HEDEF_BOS"]
+    assert payload["findings"][0]["records"] == [1]
+
+
+def test_glossary_lint_eksik_dosya_girdi_hatasi(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    assert main(["glossary", "lint", str(tmp_path / "yok.yaml")]) == 2
+    assert "dosya bulunamadı" in capsys.readouterr().err
+
+
+def test_glossary_alt_komutsuz_kullanim_hatasi(capsys: pytest.CaptureFixture[str]) -> None:
+    assert main(["glossary"]) == 2
+    assert "kullanım" in capsys.readouterr().err
